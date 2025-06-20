@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marriage Biodata Form</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+        line-height: 1.6;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+            circle at 20% 20%,
+            rgba(255, 255, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(255, 255, 255, 0.1) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 25px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        text-align: center;
+        padding: 40px 30px;
+        position: relative;
+      }
+
+      .header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        pointer-events: none;
+      }
+
+      .header-content {
+        position: relative;
+        z-index: 2;
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .header p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        font-weight: 300;
+      }
+
+      .form-container {
+        padding: 40px;
+      }
+
+      .form {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+      }
+
+      .form-section {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 20px;
+        padding: 30px;
+        position: relative;
+        transition: all 0.3s ease;
+        overflow: hidden;
+      }
+
+      .form-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+      }
+
+      .form-section:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #2d3748;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .section-icon {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.1rem;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-group.full-width {
+        grid-column: 1 / -1;
+      }
+
+      .form-label {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: #2d3748;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .required {
+        color: #e53e3e;
+      }
+
+      .form-input,
+      .form-textarea,
+      .form-select {
+        padding: 15px 18px;
+        font-size: 1rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        background: white;
+        transition: all 0.3s ease;
+        font-family: inherit;
+      }
+
+      .form-input:focus,
+      .form-textarea:focus,
+      .form-select:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        transform: translateY(-1px);
+      }
+
+      .form-textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+
+      .input-icon {
+        position: relative;
+      }
+
+      .input-icon i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #a0aec0;
+        font-size: 1.1rem;
+      }
+
+      .input-icon .form-input {
+        padding-left: 45px;
+      }
+
+      .submit-section {
+        text-align: center;
+        padding: 30px 0;
+      }
+
+      .submit-btn {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 18px 40px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+      }
+
+      .submit-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .submit-btn:hover::before {
+        left: 100%;
+      }
+
+      .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+      }
+
+      .submit-btn:active {
+        transform: translateY(-1px);
+      }
+
+      /* Form validation styles */
+      .form-input.error,
+      .form-textarea.error,
+      .form-select.error {
+        border-color: #e53e3e;
+        background-color: #fed7d7;
+      }
+
+      .error-message {
+        color: #e53e3e;
+        font-size: 0.85rem;
+        margin-top: 5px;
+        display: none;
+      }
+
+      /* Progress indicator */
+      .progress-bar {
+        background: #e2e8f0;
+        height: 4px;
+        border-radius: 2px;
+        overflow: hidden;
+        margin-bottom: 30px;
+      }
+
+      .progress-fill {
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        height: 100%;
+        width: 0%;
+        transition: width 0.3s ease;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .container {
+          margin: 10px;
+          border-radius: 20px;
+        }
+
+        .header {
+          padding: 30px 20px;
+        }
+
+        .header h1 {
+          font-size: 2rem;
+        }
+
+        .form-container {
+          padding: 30px 20px;
+        }
+
+        .form-section {
+          padding: 25px 20px;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        .section-title {
+          font-size: 1.3rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 10px;
+        }
+
+        .header h1 {
+          font-size: 1.8rem;
+        }
+
+        .form-container {
+          padding: 20px 15px;
+        }
+
+        .form-section {
+          padding: 20px 15px;
+        }
+      }
+
+      /* Animation */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.6s ease forwards;
+      }
+
+      @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .form-section:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .form-section:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .form-section:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      .form-section:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+      .form-section:nth-child(5) {
+        animation-delay: 0.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="header-content">
+          <h1><i class="fas fa-heart"></i> Marriage Biodata Form</h1>
+          <p>
+            Please fill out the details below to create your comprehensive
+            biodata profile.
+          </p>
+        </div>
+      </div>
+
+      <div class="form-container">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <form class="form" id="biodataForm" novalidate>
+          <!-- Personal Details Section -->
+          <div class="form-section fade-in">
+            <h2 class="section-title">
+              <div class="section-icon">
+                <i class="fas fa-user"></i>
+              </div>
+              Personal Details
+            </h2>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="name">
+                  Full Name <span class="required">*</span>
+                </label>
+                <div class="input-icon">
+                  <i class="fas fa-user"></i>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    class="form-input"
+                    required
+                    placeholder="Enter your full name"
+                  />
+                </div>
+                <div class="error-message">Please enter your full name</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="age">
+                  Age <span class="required">*</span>
+                </label>
+                <div class="input-icon">
+                  <i class="fas fa-calendar"></i>
+                  <input
+                    type="number"
+                    id="age"
+                    name="age"
+                    class="form-input"
+                    min="18"
+                    max="100"
+                    required
+                    placeholder="Enter your age"
+                  />
+                </div>
+                <div class="error-message">
+                  Please enter a valid age (18-100)
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="height">
+                  Height <span class="required">*</span>
+                </label>
+                <div class="input-icon">
+                  <i class="fas fa-ruler"></i>
+                  <input
+                    type="text"
+                    id="height"
+                    name="height"
+                    class="form-input"
+                    required
+                    placeholder="e.g., 5'10&quot; or 175 cm"
+                  />
+                </div>
+                <div class="error-message">Please enter your height</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="occupation">
+                  Occupation <span class="required">*</span>
+                </label>
+                <div class="input-icon">
+                  <i class="fas fa-briefcase"></i>
+                  <input
+                    type="text"
+                    id="occupation"
+                    name="occupation"
+                    class="form-input"
+                    required
+                    placeholder="Enter your occupation"
+                  />
+                </div>
+                <div class="error-message">Please enter your occupation</div>
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label" for="location">
+                  Location <span class="required">*</span>
+                </label>
+                <div class="input-icon">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <input
+                    type="text"
+                    id="location"
+                    name="location"
+                    class="form-input"
+                    required
+                    placeholder="Enter your city, state, country"
+                  />
+                </div>
+                <div class="error-message">Please enter your location</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Education Section -->
+          <div class="form-section fade-in">
+            <h2 class="section-title">
+              <div class="section-icon">
+                <i class="fas fa-graduation-cap"></i>
+              </div>
+              Education
+            </h2>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="degree">
+                  Highest Degree <span class="required">*</span>
+                </label>
+                <div class="input-icon">
+                  <i class="fas fa-certificate"></i>
+                  <input
+                    type="text"
+                    id="degree"
+                    name="degree"
+                    class="form-input"
+                    required
+                    placeholder="e.g., Bachelor of Science"
+                  />
+                </div>
+                <div class="error-message">Please enter your degree</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="institution">
+                  Institution <span class="required">*</span>
+                </label>
+                <div class="input-icon">
+                  <i class="fas fa-university"></i>
+                  <input
+                    type="text"
+                    id="institution"
+                    name="institution"
+                    class="form-input"
+                    required
+                    placeholder="Enter institution name"
+                  />
+                </div>
+                <div class="error-message">Please enter your institution</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="year">
+                  Year of Graduation <span class="required">*</span>
+                </label>
+                <div class="input-icon">
+                  <i class="fas fa-calendar-alt"></i>
+                  <input
+                    type="number"
+                    id="year"
+                    name="year"
+                    class="form-input"
+                    min="1960"
+                    max="2025"
+                    required
+                    placeholder="Enter graduation year"
+                  />
+                </div>
+                <div class="error-message">
+                  Please enter a valid graduation year
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Family Background Section -->
+          <div class="form-section fade-in">
+            <h2 class="section-title">
+              <div class="section-icon">
+                <i class="fas fa-home"></i>
+              </div>
+              Family Background
+            </h2>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="father">
+                  Father's Name & Occupation <span class="required">*</span>
+                </label>
+                <div class="input-icon">
+                  <i class="fas fa-male"></i>
+                  <input
+                    type="text"
+                    id="father"
+                    name="father"
+                    class="form-input"
+                    required
+                    placeholder="Enter father's name and occupation"
+                  />
+                </div>
+                <div class="error-message">Please enter father's details</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="mother">
+                  Mother's Name & Occupation <span class="required">*</span>
+                </label>
+                <div class="input-icon">
+                  <i class="fas fa-female"></i>
+                  <input
+                    type="text"
+                    id="mother"
+                    name="mother"
+                    class="form-input"
+                    required
+                    placeholder="Enter mother's name and occupation"
+                  />
+                </div>
+                <div class="error-message">Please enter mother's details</div>
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label" for="siblings"> Siblings </label>
+                <div class="input-icon">
+                  <i class="fas fa-users"></i>
+                  <input
+                    type="text"
+                    id="siblings"
+                    name="siblings"
+                    class="form-input"
+                    placeholder="e.g., One younger sister, Two older brothers"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hobbies & Interests Section -->
+          <div class="form-section fade-in">
+            <h2 class="section-title">
+              <div class="section-icon">
+                <i class="fas fa-heart"></i>
+              </div>
+              Hobbies & Interests
+            </h2>
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label class="form-label" for="hobbies">
+                  Hobbies & Interests
+                </label>
+                <textarea
+                  id="hobbies"
+                  name="hobbies"
+                  class="form-textarea"
+                  rows="4"
+                  placeholder="Share your hobbies, interests, and activities you enjoy in your free time..."
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Information Section -->
+          <div class="form-section fade-in">
+            <h2 class="section-title">
+              <div class="section-icon">
+                <i class="fas fa-address-book"></i>
+              </div>
+              Contact Information
+            </h2>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="email">
+                  Email Address <span class="required">*</span>
+                </label>
+                <div class="input-icon">
+                  <i class="fas fa-envelope"></i>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="form-input"
+                    required
+                    placeholder="Enter your email address"
+                  />
+                </div>
+                <div class="error-message">
+                  Please enter a valid email address
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="phone">
+                  Phone Number <span class="required">*</span>
+                </label>
+                <div class="input-icon">
+                  <i class="fas fa-phone"></i>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    class="form-input"
+                    required
+                    placeholder="Enter your phone number"
+                  />
+                </div>
+                <div class="error-message">
+                  Please enter a valid phone number
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Section -->
+          <div class="submit-section">
+            <button type="submit" class="submit-btn">
+              <i class="fas fa-paper-plane"></i>
+              Submit Biodata
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Form validation and progress tracking
+      const form = document.getElementById("biodataForm");
+      const progressFill = document.getElementById("progressFill");
+      const requiredFields = form.querySelectorAll("[required]");
+
+      // Update progress bar
+      function updateProgress() {
+        let filledFields = 0;
+        requiredFields.forEach((field) => {
+          if (field.value.trim() !== "") {
+            filledFields++;
+          }
+        });
+        const progress = (filledFields / requiredFields.length) * 100;
+        progressFill.style.width = progress + "%";
+      }
+
+      // Add event listeners to all form inputs
+      const allInputs = form.querySelectorAll("input, textarea, select");
+      allInputs.forEach((input) => {
+        input.addEventListener("input", updateProgress);
+        input.addEventListener("blur", validateField);
+      });
+
+      // Field validation
+      function validateField(event) {
+        const field = event.target;
+        const errorMessage =
+          field.parentNode.parentNode.querySelector(".error-message");
+
+        // Remove previous error state
+        field.classList.remove("error");
+        errorMessage.style.display = "none";
+
+        // Validate required fields
+        if (field.hasAttribute("required") && field.value.trim() === "") {
+          showError(field, errorMessage, "This field is required");
+          return false;
+        }
+
+        // Validate email
+        if (field.type === "email" && field.value.trim() !== "") {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(field.value)) {
+            showError(
+              field,
+              errorMessage,
+              "Please enter a valid email address"
+            );
+            return false;
+          }
+        }
+
+        // Validate age
+        if (field.name === "age" && field.value !== "") {
+          const age = parseInt(field.value);
+          if (age < 18 || age > 100) {
+            showError(field, errorMessage, "Age must be between 18 and 100");
+            return false;
+          }
+        }
+
+        // Validate graduation year
+        if (field.name === "year" && field.value !== "") {
+          const year = parseInt(field.value);
+          const currentYear = new Date().getFullYear();
+          if (year < 1960 || year > currentYear + 1) {
+            showError(
+              field,
+              errorMessage,
+              "Please enter a valid graduation year"
+            );
+            return false;
+          }
+        }
+
+        return true;
+      }
+
+      function showError(field, errorElement, message) {
+        field.classList.add("error");
+        errorElement.textContent = message;
+        errorElement.style.display = "block";
+      }
+
+      // Form submission
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        let isValid = true;
+
+        // Validate all required fields
+        requiredFields.forEach((field) => {
+          const fakeEvent = { target: field };
+          if (!validateField(fakeEvent)) {
+            isValid = false;
+          }
+        });
+
+        if (isValid) {
+          // Simulate form submission
+          const submitBtn = form.querySelector(".submit-btn");
+          const originalText = submitBtn.innerHTML;
+
+          submitBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+          submitBtn.disabled = true;
+
+          setTimeout(() => {
+            alert(
+              "Biodata submitted successfully! Thank you for providing your information."
+            );
+            form.reset();
+            updateProgress();
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+          }, 2000);
+        } else {
+          // Scroll to first error
+          const firstError = form.querySelector(".error");
+          if (firstError) {
+            firstError.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        }
+      });
+
+      // Initialize progress bar
+      updateProgress();
+
+      // Smooth scrolling for better UX
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
